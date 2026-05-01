@@ -1,0 +1,45 @@
+name: develop-cicd
+
+on: 
+  push:
+    branches: ["develop"]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+# sonar setup
+      - name: Setup sonar
+        uses: actions/setup-java@v4
+        with:
+          distributions: 'temurin'
+          java-version: '17'
+
+# node js setup
+      - name: Node setup
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+# sonar scaner install
+      - name: Sonar scanne
+        run: |
+          sonar-scanner \
+          -Dsonar.projectKey=devops1 \
+          -Dsonar.sources=. \
+          -Dsonar.host.url=${{ secrets.SONAR_URL }} \
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+
+# quality 
+      - name: Sonar Quality Gate
+        uses: SonarSource/sonarqube-quality-gate-actions@v1
+        timeout-minutes: 5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+          
+
+        
