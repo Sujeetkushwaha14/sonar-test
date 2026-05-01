@@ -15,7 +15,7 @@ jobs:
       - name: Setup sonar
         uses: actions/setup-java@v4
         with:
-          distributions: 'temurin'
+          distribution: 'temurin'
           java-version: '17'
 
 # node js setup
