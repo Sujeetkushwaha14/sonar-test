@@ -25,6 +25,9 @@ jobs:
           node-version: 20
 
 # sonar scaner install
+      - name: sonar install
+        run: npm install -g sonar-scanner
+ # sonar scan       
       - name: Sonar scanne
         run: |
           sonar-scanner \
